@@ -12,7 +12,6 @@ class AppConstants {
   static const numberRegExp = r"^[0-9]*$";
 
   /// Team 1
-
   static const String password_pattern =
       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
 

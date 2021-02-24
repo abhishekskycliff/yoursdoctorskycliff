@@ -104,6 +104,7 @@ class LoginState extends State<LoginScreen> {
                 ),
                 margin: const EdgeInsets.only(bottom: 80),
               ),
+
               /// Container for welcome screen
               Container(
                 child: Text(
@@ -111,14 +112,15 @@ class LoginState extends State<LoginScreen> {
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold, fontSize: 35),
                 ),
-                margin: const EdgeInsets.only(bottom: 20),
+                margin: EdgeInsets.only(bottom: 20),
               ),
+
               /// Container for your_doctors text
               Container(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height*0.2,
-                    maxWidth: MediaQuery.of(context).size.width*0.9,
+                    maxHeight: MediaQuery.of(context).size.height * 0.2,
+                    maxWidth: MediaQuery.of(context).size.width * 0.9,
                   ),
                   child: Text(
                     AppStrings.your_doctor_text,
@@ -131,6 +133,7 @@ class LoginState extends State<LoginScreen> {
                 ),
                 margin: const EdgeInsets.only(bottom: 80),
               ),
+
               /// Form to validate the user data using RegExp
               /// This Form contains two TextFormField
               Form(
@@ -188,6 +191,7 @@ class LoginState extends State<LoginScreen> {
                   ],
                 ),
               ),
+
               /// Implementation for the sign in  Flat button
               Container(
                 decoration: BoxDecoration(
