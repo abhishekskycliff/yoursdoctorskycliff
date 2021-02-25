@@ -17,11 +17,34 @@ class LoginScreen extends StatefulWidget {
 class LoginState extends State<LoginScreen> {
   bool _passwordvisible;
   final _formKey = GlobalKey<FormState>();
+  final email_controller = TextEditingController();
+  final password_controller = TextEditingController();
 
   @override
   // ignore: must_call_super
   void initState() {
     _passwordvisible = false;
+  }
+
+  /// method to validate the email and password from json data
+  void authentication() {
+    var check_email = email_controller.text;
+    var check_password = password_controller.text;
+
+    if (check_email == "a@gmail.com" && check_password == "abc#ABC99") {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => SecurityPin()));
+    } else if(check_email == "" && check_password == ""){
+
+
+      //  validateEmail(value),
+      // Scaffold.of(context).showSnackBar(
+      //     SnackBar(
+      //       content: Text("hello"),
+      //     ),
+      // );
+
+    }
   }
 
   /// method to validate the email
@@ -147,7 +170,7 @@ class LoginState extends State<LoginScreen> {
                       ),
                       child: TextFormField(
                         validator: validateEmail,
-                        //    controller: controller_email,
+                        controller: email_controller,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: 20),
                           border: InputBorder.none,
@@ -163,7 +186,7 @@ class LoginState extends State<LoginScreen> {
                       ),
                       child: TextFormField(
                         validator: validatePassword,
-                        //   controller: controller_password,
+                        controller: password_controller,
                         keyboardType: TextInputType.text,
                         obscureText: !_passwordvisible,
                         decoration: InputDecoration(
@@ -203,14 +226,17 @@ class LoginState extends State<LoginScreen> {
                 child: FlatButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => SecurityPin()),
-                        );
-                      }
-                    },
+                    onPressed: authentication,
+
+                    //     () {
+                    //   if (_formKey.currentState.validate()) {
+                    //     Navigator.of(context).push(
+                    //       MaterialPageRoute(
+                    //           builder: (context) => SecurityPin()),
+                    //     );
+                    //   }
+                    // },
+
                     color: CustomizedColors.signInButtonColor,
                     child: Text(
                       AppStrings.sign_in,

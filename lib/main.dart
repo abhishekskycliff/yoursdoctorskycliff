@@ -1,4 +1,6 @@
 import 'package:YOURDRS_FlutterAPP/ui/login/loginscreen.dart';
+import 'package:YOURDRS_FlutterAPP/ui/login/security_pin.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginScreen(),
+      home: SecurityPin(),
     );
   }
 }

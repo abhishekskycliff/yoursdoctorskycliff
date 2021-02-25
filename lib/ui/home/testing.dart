@@ -14,12 +14,6 @@ class SecurityPin extends StatefulWidget {
 }
 
 class Security_state extends State<SecurityPin> {
-  var _user;
-  var _password;
-
-  // ignore: non_constant_identifier_names
- // SecurityPin _user_id = new SecurityPin();
-
   Future<UserAuth> _futureUser;
 
   bool _passwordvisible;
@@ -71,15 +65,8 @@ class Security_state extends State<SecurityPin> {
     return Scaffold(
       body: Center(
         child: Container(
-          // width: ,
-          child: FutureBuilder<UserAuth>(
-            future: fetchUserData(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                print(snapshot.data);
-
-                /// This Form contains two TextFormField
-                return Container(
+          child: (_futureUser == null)
+              ? Container(
                   margin: const EdgeInsets.only(top: 100),
                   child: Form(
                     key: _formKey,
@@ -146,40 +133,7 @@ class Security_state extends State<SecurityPin> {
                           child: FlatButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              onPressed: () {
-                                setState(() {
-                                  var check_email = email_controller.text;
-                                  var check_password = password_controller.text;
-
-                                  if (check_email == snapshot.data.title &&
-                                      check_password ==
-                                          snapshot.data.userId.toString()) {
-                                    print("true");
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginScreen()));
-                                  } else {
-                                    print("false");
-
-                                    return showDialog(
-                                      context: context,
-                                      builder: (ctx) => AlertDialog(
-                                        title: Row(
-                                          children: [
-                                            Text(
-                                              "Enter your email id and pasword",
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                });
-                              },
+                              onPressed: authentication,
 
                               //     () {
                               //   if (_formKey.currentState.validate()) {
@@ -204,15 +158,26 @@ class Security_state extends State<SecurityPin> {
                       ],
                     ),
                   ),
-                );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
+                )
 
-              // By default, show a loading spinner.
-              return CircularProgressIndicator();
-            },
-          ),
+          /// if _futureUser is not null
+              : FutureBuilder<UserAuth>(
+                  future: fetchUserData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      print(snapshot.data);
+                      return Text(
+                        snapshot.data.title,
+                        style: TextStyle(fontSize: 30),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+
+// By default, show a loading spinner.
+                    return CircularProgressIndicator();
+                  },
+                ),
         ),
       ),
     );

@@ -31,14 +31,21 @@ dependencies:
   # Date Formatter
   intl: any
 
+
   # ============================================== Team 1 ================================================
   # Google fonts
   google_fonts: ^1.1.2
   flutter_launcher_icons: ^0.7.0
+  http: any
   # ============================================== Team 1 ================================================
+
+
 dev_dependencies:
  # flutter_test:
   #  sdk: flutter
+
+
+
 # =============================================== Team 1 =================================================
 
 flutter_icons:
@@ -50,6 +57,7 @@ flutter_icons:
   adaptive_icon_foreground: "assets/launcher/foreground.png"
 
 # ============================================== Team 1 ================================================
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
