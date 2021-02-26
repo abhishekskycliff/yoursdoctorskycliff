@@ -18,7 +18,7 @@ class Security_state extends State<SecurityPin> {
   var _password;
 
   // ignore: non_constant_identifier_names
- // SecurityPin _user_id = new SecurityPin();
+  // SecurityPin _user_id = new SecurityPin();
 
   Future<UserAuth> _futureUser;
 
@@ -147,13 +147,13 @@ class Security_state extends State<SecurityPin> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               onPressed: () {
-                                setState(() {
+                                // setState(() {
                                   var check_email = email_controller.text;
                                   var check_password = password_controller.text;
 
-                                  if (check_email == snapshot.data.title &&
+                                  if (check_email == snapshot.data.user &&
                                       check_password ==
-                                          snapshot.data.userId.toString()) {
+                                          snapshot.data.password) {
                                     print("true");
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -178,7 +178,7 @@ class Security_state extends State<SecurityPin> {
                                       ),
                                     );
                                   }
-                                });
+                                // });
                               },
 
                               //     () {

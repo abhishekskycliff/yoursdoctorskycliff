@@ -37,12 +37,14 @@ dependencies:
   google_fonts: ^1.1.2
   flutter_launcher_icons: ^0.7.0
   http: any
+  flutter_bloc: any
+  equatable: any
   # ============================================== Team 1 ================================================
 
 
 dev_dependencies:
- # flutter_test:
-  #  sdk: flutter
+# flutter_test:
+#  sdk: flutter
 
 
 

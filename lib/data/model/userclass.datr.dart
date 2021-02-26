@@ -1,21 +1,18 @@
 class UserAuth {
-  var userId;
-  var id;
-  var title;
+  String user;
+  String password;
 
-  UserAuth({this.userId, this.id, this.title});
+  UserAuth({this.user, this.password});
 
   UserAuth.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    id = json['id'];
-    title = json['title'];
+    user = json['user'];
+    password = json['password'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userId'] = this.userId;
-    data['id'] = this.id;
-    data['title'] = this.title;
+    data['user'] = this.user;
+    data['password'] = this.password;
     return data;
   }
 }
