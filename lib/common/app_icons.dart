@@ -17,9 +17,10 @@ class AppIcons {
 
   static const add = "assets/icons/add.svg";
 
-
   /// Team 1
   static const doctor_img = "assets/images/doctor_img.png";
+  static const alert_img = "assets/images/login_successful.gif";
+
 }
 
 class AppImages {

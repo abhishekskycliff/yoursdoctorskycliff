@@ -147,7 +147,7 @@ class Security_state extends State<SecurityPin> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               onPressed: () {
-                                // setState(() {
+                                setState(() {
                                   var check_email = email_controller.text;
                                   var check_password = password_controller.text;
 
@@ -168,7 +168,7 @@ class Security_state extends State<SecurityPin> {
                                         title: Row(
                                           children: [
                                             Text(
-                                              "Enter your email id and pasword",
+                                              "Enter your email id and password",
                                               style: TextStyle(
                                                 fontSize: 15,
                                               ),
@@ -178,7 +178,7 @@ class Security_state extends State<SecurityPin> {
                                       ),
                                     );
                                   }
-                                // });
+                                });
                               },
 
                               //     () {

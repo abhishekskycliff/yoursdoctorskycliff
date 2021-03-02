@@ -12,9 +12,28 @@ class AppConstants {
   static const numberRegExp = r"^[0-9]*$";
 
   /// Team 1
-  static const String password_pattern =
-      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
 
+  static bool isFieldEmpty(String fieldValue) => fieldValue?.isEmpty ?? true;
+
+  static bool validateEmailAddress(String email) {
+    if (email == null) {
+      return false;
+    }
+
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(email);
+  }
+
+  static bool validatePassword(String email) {
+    if (email == null) {
+      return false;
+    }
+
+    return RegExp(
+            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+        .hasMatch(email);
+  }
 
   /// 300ms
   static const inputFieldValidateDelay = 300;
@@ -26,7 +45,8 @@ class AppConstants {
   // Locale
   static const supportedLocales = [Locale('en', 'US')];
 
-  // Network
+  /// Network
+  static const dioBaseUrl = "https://ydrsdevapi.yourdrs.com/";
   static const apiTimeout = 30 * 1000; // 30 sec
   static const dioConnectTimeout = 30 * 1000; // 30 sec
   static const dioReceiveTimeout = 30 * 1000; // 30 sec
