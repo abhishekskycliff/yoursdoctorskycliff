@@ -1,6 +1,6 @@
 import 'package:YOURDRS_FlutterAPP/blocs/states/form_screen_state.dart';
+import 'package:YOURDRS_FlutterAPP/common/app_constants.dart';
 import 'package:YOURDRS_FlutterAPP/data/model/enums/field_error.dart';
-import 'package:YOURDRS_FlutterAPP/mixins/validation_mixin.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'events/form_screen_event.dart';

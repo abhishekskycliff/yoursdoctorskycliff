@@ -11,29 +11,6 @@ class AppConstants {
   static const phoneCCPattern = r"(^(?:[+0]9)?[0-9]{1,4}$)";
   static const numberRegExp = r"^[0-9]*$";
 
-  /// Team 1
-
-  static bool isFieldEmpty(String fieldValue) => fieldValue?.isEmpty ?? true;
-
-  static bool validateEmailAddress(String email) {
-    if (email == null) {
-      return false;
-    }
-
-    return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(email);
-  }
-
-  static bool validatePassword(String email) {
-    if (email == null) {
-      return false;
-    }
-
-    return RegExp(
-            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
-        .hasMatch(email);
-  }
 
   /// 300ms
   static const inputFieldValidateDelay = 300;
@@ -56,7 +33,11 @@ class AppConstants {
   // UI
   static const splashScreenTimeout = 2 * 1000; // 2sec
 
-  static String enumToString(Object o) => o.toString().split('.').last;
+  static String enumToString(Object o) =>
+      o
+          .toString()
+          .split('.')
+          .last;
 
   static T enumFromString<T>(String key, List<T> values) =>
       values.firstWhere((v) => key == enumToString(v), orElse: () => null);
@@ -141,14 +122,14 @@ class AppConstants {
     bool hasDigits = password.contains(new RegExp(r'[0-9]'));
     bool hasLowercase = password.contains(new RegExp(r'[a-z]'));
     bool hasSpecialCharacters =
-        password.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    password.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
     bool hasMinLength = password.length > minLength;
 
     return hasDigits &
-        hasUppercase &
-        hasLowercase &
-        hasSpecialCharacters &
-        hasMinLength;
+    hasUppercase &
+    hasLowercase &
+    hasSpecialCharacters &
+    hasMinLength;
   }
 
   static bool isEmailValid(String data) {
@@ -164,4 +145,30 @@ class AppConstants {
     bool isLengthOk = (otpValue.length == AppConstants.pinLength);
     return (isOnlyNum && isLengthOk);
   }
+}
+
+
+mixin ValidationMixin {
+  bool isFieldEmpty(String fieldValue) => fieldValue?.isEmpty ?? true;
+
+  bool validateEmailAddress(String email) {
+    if (email == null) {
+      return false;
+    }
+
+    return RegExp(
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(email);
+  }
+
+  bool validatePassword(String email) {
+    if (email == null) {
+      return false;
+    }
+
+    return RegExp(
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+        .hasMatch(email);
+  }
+
 }

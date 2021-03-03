@@ -1,4 +1,3 @@
-import 'package:YOURDRS_FlutterAPP/blocs/events/form_screen_event.dart';
 import 'package:YOURDRS_FlutterAPP/blocs/form_screen_bloc.dart';
 import 'package:YOURDRS_FlutterAPP/blocs/states/form_screen_state.dart';
 import 'package:YOURDRS_FlutterAPP/common/app_colors.dart';
@@ -13,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+///  Login method using FutureBuilder tried on Tuesday
+
 class LoginScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -24,8 +25,12 @@ class LoginState extends State<LoginScreen> {
   bool _passwordvisible;
   FormScreenBloc _bloc;
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  //
+  // final _emailController = TextEditingController();
+  // final _passwordController = TextEditingController();
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -146,180 +151,188 @@ class LoginState extends State<LoginScreen> {
                         /// Form to validate the user data using RegExp
                         /// This Form contains two TextFormField
                         FutureBuilder<AuthenticateUser>(
-                          future: postApiMethod(this._passwordController,this._emailController),
+                          future: postApiMethod(this._emailController.text,
+                              this._passwordController.text),
                           builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              print(snapshot.data);
+                            //  if (snapshot.hasData) {
+                            //    print(snapshot.data);
 
-                              /// This Form contains two TextFormField
-                              return Container(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(snapshot.data.userName),
-                                    /// code for the email validation
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: CustomizedColors
-                                            .text_field_background,
-                                        borderRadius: BorderRadius.circular(10),
+                            /// This Form contains two TextFormField
+                            return Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Text(snapshot.data.userName),
+                                  /// code for the email validation
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: CustomizedColors
+                                          .text_field_background,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: TextField(
+                                      controller: this._emailController,
+                                      style: TextStyle(
+                                        color: this._hasEmailError(state)
+                                            ? Colors.black
+                                            : Colors.black,
                                       ),
-                                      child: TextField(
-                                        controller: this._emailController,
-                                        style: TextStyle(
+                                      decoration: InputDecoration(
+                                        suffixIcon: Icon(
+                                          Icons.error,
                                           color: this._hasEmailError(state)
-                                              ? Colors.black
+                                              ? Colors.red
+                                              : CustomizedColors
+                                                  .text_field_background,
+                                        ),
+                                        contentPadding:
+                                            EdgeInsets.only(left: 20, top: 15),
+                                        border: InputBorder.none,
+                                        hintText:
+                                            AppStrings.email_text_field_hint,
+                                        labelStyle: TextStyle(
+                                          color: this._hasEmailError(state)
+                                              ? Colors.red
                                               : Colors.black,
                                         ),
-                                        decoration: InputDecoration(
-                                          suffixIcon: Icon(
-                                            Icons.error,
-                                            color: this._hasEmailError(state)
-                                                ? Colors.red
-                                                : CustomizedColors
-                                                .text_field_background,
-                                          ),
-                                          contentPadding:
-                                              EdgeInsets.only(left: 20,top: 15),
-                                          border: InputBorder.none,
-                                          hintText:
-                                              AppStrings.email_text_field_hint,
-                                          labelStyle: TextStyle(
-                                            color: this._hasEmailError(state)
-                                                ? Colors.red
-                                                : Colors.black,
-                                          ),
-                                          hintStyle: TextStyle(
-                                            color: this._hasEmailError(state)
-                                                ? Colors.red
-                                                : Colors.black,
-                                          ),
+                                        hintStyle: TextStyle(
+                                          color: this._hasEmailError(state)
+                                              ? Colors.red
+                                              : Colors.black,
                                         ),
                                       ),
-                                      margin: const EdgeInsets.only(
-                                          left: 30, right: 30, top: 60),
                                     ),
+                                    margin: const EdgeInsets.only(
+                                        left: 30, right: 30, top: 60),
+                                  ),
 
-                                    /// if statement to check the text field
-                                    /// is empty or not and display error message
-                                    if (this._hasEmailError(state)) ...[
-                                      SizedBox(height: 5),
-                                      Text(
-                                        this._emailErrorText(state.emailError),
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                    ],
-                                    SizedBox(height: 40),
+                                  /// if statement to check the text field
+                                  /// is empty or not and display error message
+                                  if (this._hasEmailError(state)) ...[
+                                    SizedBox(height: 5),
+                                    Text(
+                                      this._emailErrorText(state.emailError),
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ],
+                                  SizedBox(height: 40),
 
-                                    /// code for the password validation
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: CustomizedColors
-                                            .text_field_background,
-                                        borderRadius: BorderRadius.circular(10),
+                                  /// code for the password validation
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: CustomizedColors
+                                          .text_field_background,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: TextField(
+                                      controller: this._passwordController,
+                                      style: TextStyle(
+                                        color: this._hasPasswordError(state)
+                                            ? Colors.red
+                                            : Colors.black,
                                       ),
-                                      child: TextField(
-                                        controller: this._passwordController,
-                                        style: TextStyle(
+                                      obscureText: !_passwordvisible,
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.only(left: 20, top: 15),
+                                        border: InputBorder.none,
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            _passwordvisible
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color: Colors.black54,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _passwordvisible =
+                                                  !_passwordvisible;
+                                            });
+                                          },
+                                        ),
+                                        hintText:
+                                            AppStrings.password_text_field_hint,
+                                        labelStyle: TextStyle(
+                                          color: this._hasPasswordError(state)
+                                              ? Colors.black
+                                              : Colors.red,
+                                        ),
+                                        hintStyle: TextStyle(
                                           color: this._hasPasswordError(state)
                                               ? Colors.red
                                               : Colors.black,
                                         ),
-                                        obscureText: !_passwordvisible,
-                                        decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
-                                              left: 20, top: 15),
-                                          border: InputBorder.none,
-                                          suffixIcon: IconButton(
-                                            icon: Icon(
-                                              _passwordvisible
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
-                                              color: Colors.black54,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                _passwordvisible =
-                                                    !_passwordvisible;
-                                              });
-                                            },
-                                          ),
-                                          hintText: AppStrings
-                                              .password_text_field_hint,
-                                          labelStyle: TextStyle(
-                                            color: this._hasPasswordError(state)
-                                                ? Colors.black
-                                                : Colors.red,
-                                          ),
-                                          hintStyle: TextStyle(
-                                            color: this._hasPasswordError(state)
-                                                ? Colors.red
-                                                : Colors.black,
-                                          ),
-                                        ),
                                       ),
-                                      margin: const EdgeInsets.only(
-                                          left: 30, right: 30),
                                     ),
+                                    margin: const EdgeInsets.only(
+                                        left: 30, right: 30),
+                                  ),
 
-                                    /// if statement to check the text field
-                                    /// is empty or not and display error message
-                                    if (this._hasPasswordError(state)) ...[
-                                      SizedBox(height: 5),
-                                      Text(
-                                        this._passwordErrorText(
-                                            state.passwordError),
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                    ],
-                                    SizedBox(height: 30),
-
-                                    /// Implementation for the sign in  Flat button
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: CustomizedColors
-                                            .text_field_background,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      child: FlatButton(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          onPressed: (){
-                                            if(snapshot.data.header.statusCode == "200"){
-                                              Navigator.push(context,MaterialPageRoute(builder: (context)=>SecurityPin()));
-                                            }else{
-
-                                            }
-                                          },
-                                              // this._bloc.add(
-                                              // FormScreenEventSubmit(
-                                              //
-                                              //     this._emailController.text,
-                                              //     this
-                                              //         ._passwordController
-                                              //         .text)),
-                                          color: CustomizedColors
-                                              .signInButtonColor,
-                                          child: Text(
-                                            AppStrings.sign_in,
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                color: CustomizedColors
-                                                    .sign_in_text_color),
-                                          )),
-                                      margin: const EdgeInsets.only(
-                                          left: 30, right: 30, top: 40),
+                                  /// if statement to check the text field
+                                  /// is empty or not and display error message
+                                  if (this._hasPasswordError(state)) ...[
+                                    SizedBox(height: 5),
+                                    Text(
+                                      this._passwordErrorText(
+                                          state.passwordError),
+                                      style: TextStyle(color: Colors.red),
                                     ),
                                   ],
-                                ),
-                              );
-                            } else if (snapshot.hasError) {
-                              return Text("${snapshot.error}");
-                            }
+                                  SizedBox(height: 30),
+
+                                  /// Implementation for the sign in  Flat button
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: CustomizedColors
+                                          .text_field_background,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 50,
+                                    child: FlatButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        onPressed: () {
+                                          postApiMethod(
+                                              this._emailController.text,
+                                              this._passwordController.text);
+                                          if (snapshot.data.header.statusCode ==
+                                              "200") {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        SecurityPin()));
+                                          } else {}
+                                          // this._bloc.add(
+                                          // FormScreenEventSubmit(
+                                          //
+                                          //     this._emailController.text,
+                                          //     this
+                                          //         ._passwordController
+                                          //         .text));
+                                        },
+                                        color:
+                                            CustomizedColors.signInButtonColor,
+                                        child: Text(
+                                          AppStrings.sign_in,
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color: CustomizedColors
+                                                  .sign_in_text_color),
+                                        )),
+                                    margin: const EdgeInsets.only(
+                                        left: 30, right: 30, top: 40),
+                                  ),
+                                ],
+                              ),
+                            );
+                            //   }
+                            //    else if (snapshot.hasError) {
+                            //      return Text("${snapshot.error}");
+                            //    }
 
                             // By default, show a loading spinner.
                             return CircularProgressIndicator();

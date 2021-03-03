@@ -14,13 +14,13 @@ Future<UserAuth> fetchUserData() async {
   return UserAuth.fromJson(responseJson[0]);
 }
 
-Future<AuthenticateUser>postApiMethod() async {
+Future<AuthenticateUser>postApiMethod(name, password) async {
   String apiUrl = ApiUrlConstants.getUser;
 
   final json = {
 
-      "userName": 'Admin',
-      "password": "a",
+      "userName": name,
+      "password": password,
       "deviceCode": "string",
       "encryptionKey": "string"
 
