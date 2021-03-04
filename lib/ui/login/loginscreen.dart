@@ -1,18 +1,12 @@
-import 'package:YOURDRS_FlutterAPP/blocs/form_screen_bloc.dart';
-import 'package:YOURDRS_FlutterAPP/blocs/states/form_screen_state.dart';
+import 'package:YOURDRS_FlutterAPP/blocs/login_bloc.dart';
 import 'package:YOURDRS_FlutterAPP/common/app_colors.dart';
 import 'package:YOURDRS_FlutterAPP/common/app_icons.dart';
 import 'package:YOURDRS_FlutterAPP/common/app_strings.dart';
-import 'package:YOURDRS_FlutterAPP/data/model/enums/field_error.dart';
-import 'package:YOURDRS_FlutterAPP/data/model/userclass.datr.dart';
-import 'package:YOURDRS_FlutterAPP/data/service/user_service.dart';
-import 'package:YOURDRS_FlutterAPP/ui/login/security_pin.dart';
+import 'package:YOURDRS_FlutterAPP/ui/home/Home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-///  Login method using FutureBuilder tried on Tuesday
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -23,214 +17,190 @@ class LoginScreen extends StatefulWidget {
 
 class LoginState extends State<LoginScreen> {
   bool _passwordvisible;
-  FormScreenBloc _bloc;
+  final _formKey = GlobalKey<FormState>();
 
-  //
-  // final _emailController = TextEditingController();
-  // final _passwordController = TextEditingController();
+  /// Text editing Controllers
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  /// Shared Preference
+    SharedPreferences logindata;
+    bool newuser;
 
   @override
   void initState() {
+    super.initState();
+    check_if_already_login();
     _passwordvisible = false;
-    this._bloc = FormScreenBloc();
     super.initState();
   }
 
+  void check_if_already_login() async {
+    logindata = await SharedPreferences.getInstance();
+    newuser = (logindata.getBool('login') ?? true);
+    print(newuser);
+    if (newuser == false) {
+      Navigator.pushReplacement(
+          context, new MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
+  }
+
+
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _bloc.close();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final _bloc = Bloc_Counter();
-    return BlocListener<FormScreenBloc, FormScreenState>(
-      bloc: this._bloc,
+    return BlocListener<LoginBloc, FormScreenState>(
       listener: (context, state) {
-        if (state.submissionSuccess) {
+        /// if the status code is true it execute the statement else go to next statement
+        if (state.isTrue == true) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        } else {
           showDialog(
             context: context,
-            child: AlertDialog(
-                title: Text('Authentication Successful!'),
-                content: Image.asset(
-                  AppIcons.alert_img,
-                ),
-                actions: [
-                  FlatButton(
-                    child: Text('OK'),
-                    onPressed: () =>
-                        Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => SecurityPin(),
-                    )),
+            builder: (ctx) => AlertDialog(
+              title: Row(
+                children: [
+                  Text(
+                    AppStrings.wrong_password_email,
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
                   ),
-                ]),
+                ],
+              ),
+            ),
           );
         }
       },
       child: Scaffold(
         body: Center(
-          child: BlocBuilder<FormScreenBloc, FormScreenState>(
-              bloc: this._bloc,
+          child: BlocBuilder<LoginBloc, FormScreenState>(
               builder: (context, state) {
-                if (state.isBusy) {
-                  return CircularProgressIndicator();
-                }
-
-                return ListView(
+            return ListView(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        /// Container for your doctor text with image
-                        Container(
-                          child: Row(
-                            // which add Row properties at the center
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                AppStrings.your,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 40,
-                                    color: CustomizedColors.your_text_color),
-                              ),
-                              Text(
-                                AppStrings.doctors,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 40,
-                                    color: CustomizedColors.doctor_text_color),
-                              ),
-                              Image.asset(
-                                AppIcons.doctor_img,
-                                // I added asset image
-                                height: 60,
-                              ),
-                            ],
+                    /// Container for your doctor text with image
+                    Container(
+                      child: Row(
+                        // which add Row properties at the center
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppStrings.your,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40,
+                                color: CustomizedColors.your_text_color),
                           ),
-                          margin: const EdgeInsets.only(bottom: 80),
-                        ),
-
-                        /// Container for welcome screen
-                        Container(
-                          child: Text(
-                            AppStrings.welcome_text,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold, fontSize: 35),
+                          Text(
+                            AppStrings.doctors,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40,
+                                color: CustomizedColors.doctor_text_color),
                           ),
-                          margin: EdgeInsets.only(bottom: 20),
-                        ),
-
-                        /// Container for your_doctors text
-                        Container(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight:
-                                  MediaQuery.of(context).size.height * 0.2,
-                              maxWidth: MediaQuery.of(context).size.width * 0.9,
-                            ),
-                            child: Text(
-                              AppStrings.your_doctor_text,
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      CustomizedColors.your_doctors_text_color),
-                            ),
+                          Image.asset(
+                            AppIcons.doctor_img,
+                            // I added asset image
+                            height: 60,
                           ),
-                          margin: const EdgeInsets.only(bottom: 25),
+                        ],
+                      ),
+                      margin: const EdgeInsets.only(bottom: 80),
+                    ),
+
+                    /// Container for welcome screen Text
+                    Container(
+                      child: Text(
+                        AppStrings.welcome_text,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 35),
+                      ),
+                      margin: EdgeInsets.only(bottom: 20),
+                    ),
+
+                    /// Container for your_doctors quote text
+                    Container(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.2,
+                          maxWidth: MediaQuery.of(context).size.width * 0.9,
                         ),
+                        child: Text(
+                          AppStrings.your_doctor_text,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: CustomizedColors.your_doctors_text_color),
+                        ),
+                      ),
+                      margin: const EdgeInsets.only(bottom: 25),
+                    ),
 
-                        /// Form to validate the user data using RegExp
-                        /// This Form contains two TextFormField
-                        FutureBuilder<AuthenticateUser>(
-                          future: postApiMethod(this._emailController.text,
-                              this._passwordController.text),
-                          builder: (context, snapshot) {
-                            //  if (snapshot.hasData) {
-                            //    print(snapshot.data);
-
-                            /// This Form contains two TextFormField
-                            return Container(
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          /// Form field which contains two TextFormField
+                          Form(
+                            key: _formKey,
+                            child: Container(
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // Text(snapshot.data.userName),
-                                  /// code for the email validation
                                   Container(
                                     decoration: BoxDecoration(
                                       color: CustomizedColors
                                           .text_field_background,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: TextField(
-                                      controller: this._emailController,
-                                      style: TextStyle(
-                                        color: this._hasEmailError(state)
-                                            ? Colors.black
-                                            : Colors.black,
-                                      ),
+
+                                    /// TextFormField for Email
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return AppStrings.enter_email;
+                                        }
+                                        return null;
+                                      },
+                                      controller: emailController,
                                       decoration: InputDecoration(
-                                        suffixIcon: Icon(
-                                          Icons.error,
-                                          color: this._hasEmailError(state)
-                                              ? Colors.red
-                                              : CustomizedColors
-                                                  .text_field_background,
-                                        ),
                                         contentPadding:
-                                            EdgeInsets.only(left: 20, top: 15),
+                                            EdgeInsets.only(left: 20),
                                         border: InputBorder.none,
                                         hintText:
                                             AppStrings.email_text_field_hint,
-                                        labelStyle: TextStyle(
-                                          color: this._hasEmailError(state)
-                                              ? Colors.red
-                                              : Colors.black,
-                                        ),
-                                        hintStyle: TextStyle(
-                                          color: this._hasEmailError(state)
-                                              ? Colors.red
-                                              : Colors.black,
-                                        ),
                                       ),
                                     ),
                                     margin: const EdgeInsets.only(
                                         left: 30, right: 30, top: 60),
                                   ),
-
-                                  /// if statement to check the text field
-                                  /// is empty or not and display error message
-                                  if (this._hasEmailError(state)) ...[
-                                    SizedBox(height: 5),
-                                    Text(
-                                      this._emailErrorText(state.emailError),
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                  ],
                                   SizedBox(height: 40),
-
-                                  /// code for the password validation
                                   Container(
                                     decoration: BoxDecoration(
                                       color: CustomizedColors
                                           .text_field_background,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: TextField(
-                                      controller: this._passwordController,
-                                      style: TextStyle(
-                                        color: this._hasPasswordError(state)
-                                            ? Colors.red
-                                            : Colors.black,
-                                      ),
+
+                                    /// TextFormField for Email
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return AppStrings.enter_password;
+                                        }
+                                        return null;
+                                      },
+                                      controller: passwordController,
                                       obscureText: !_passwordvisible,
                                       decoration: InputDecoration(
                                         contentPadding:
@@ -252,125 +222,65 @@ class LoginState extends State<LoginScreen> {
                                         ),
                                         hintText:
                                             AppStrings.password_text_field_hint,
-                                        labelStyle: TextStyle(
-                                          color: this._hasPasswordError(state)
-                                              ? Colors.black
-                                              : Colors.red,
-                                        ),
-                                        hintStyle: TextStyle(
-                                          color: this._hasPasswordError(state)
-                                              ? Colors.red
-                                              : Colors.black,
-                                        ),
                                       ),
                                     ),
                                     margin: const EdgeInsets.only(
                                         left: 30, right: 30),
                                   ),
-
-                                  /// if statement to check the text field
-                                  /// is empty or not and display error message
-                                  if (this._hasPasswordError(state)) ...[
-                                    SizedBox(height: 5),
-                                    Text(
-                                      this._passwordErrorText(
-                                          state.passwordError),
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                  ],
                                   SizedBox(height: 30),
-
-                                  /// Implementation for the sign in  Flat button
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: CustomizedColors
-                                          .text_field_background,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    child: FlatButton(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        onPressed: () {
-                                          postApiMethod(
-                                              this._emailController.text,
-                                              this._passwordController.text);
-                                          if (snapshot.data.header.statusCode ==
-                                              "200") {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        SecurityPin()));
-                                          } else {}
-                                          // this._bloc.add(
-                                          // FormScreenEventSubmit(
-                                          //
-                                          //     this._emailController.text,
-                                          //     this
-                                          //         ._passwordController
-                                          //         .text));
-                                        },
-                                        color:
-                                            CustomizedColors.signInButtonColor,
-                                        child: Text(
-                                          AppStrings.sign_in,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: CustomizedColors
-                                                  .sign_in_text_color),
-                                        )),
-                                    margin: const EdgeInsets.only(
-                                        left: 30, right: 30, top: 40),
-                                  ),
                                 ],
                               ),
-                            );
-                            //   }
-                            //    else if (snapshot.hasError) {
-                            //      return Text("${snapshot.error}");
-                            //    }
+                            ),
+                          ),
 
-                            // By default, show a loading spinner.
-                            return CircularProgressIndicator();
-                          },
-                        ),
-                      ],
+                          /// Implementation for the sign in  Flat button
+                          Container(
+                            decoration: BoxDecoration(
+                              color: CustomizedColors.text_field_background,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                onPressed: () {
+                                  if (_formKey.currentState.validate()) {
+                                    // testing shared preferance
+
+                                    print('Successfull');
+                                    logindata.setBool('login', false);
+                                    logindata.setString('username', emailController.text);
+
+                                    // testing shared preferance
+                                    print("This is Email ${emailController.text}");
+                                    BlocProvider.of<LoginBloc>(context).add(
+                                        FormScreenEvent(emailController.text,
+                                            passwordController.text));
+                                  }
+                                },
+                                color: CustomizedColors.signInButtonColor,
+                                child: Text(
+                                  AppStrings.sign_in,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      color:
+                                          CustomizedColors.sign_in_text_color),
+                                )),
+                            margin: const EdgeInsets.only(
+                                left: 30, right: 30, top: 40),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                );
-              }),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
-  }
-
-  bool _hasEmailError(FormScreenState state) => state.emailError != null;
-
-  String _emailErrorText(FieldError error) {
-    switch (error) {
-      case FieldError.Empty:
-        return 'You need to enter an email address';
-      case FieldError.Invalid:
-        return 'Email address invalid';
-      default:
-        return '';
-    }
-  }
-
-  bool _hasPasswordError(FormScreenState state) => state.passwordError != null;
-
-  String _passwordErrorText(FieldError error) {
-    switch (error) {
-      case FieldError.Empty:
-        return 'You need to enter an password';
-      case FieldError.Invalid:
-        return 'your password is invalid';
-      default:
-        return '';
-    }
   }
 }

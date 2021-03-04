@@ -35,18 +35,32 @@ dependencies:
   # ============================================== Team 1 ================================================
   # Google fonts
   google_fonts: ^1.1.2
-  flutter_launcher_icons: ^0.7.0
-  http: any
-  flutter_bloc: 3.2.0
-  bloc: any
+
+  # equatable
   equatable: any
+
+  # Shared Preference
   shared_preferences: ^0.5.12+4
+
+  # Flutter icon
+  flutter_launcher_icons: ^0.7.0
+
+  # bloc
+  bloc: ^6.1.1
+  flutter_bloc: any
+
+  #https
+  http: any
+
+  # path
+  path: any
+  path_provider: ^1.6.27
   # ============================================== Team 1 ================================================
 
 
 dev_dependencies:
- flutter_test:
-  sdk: flutter
+  flutter_test:
+    sdk: flutter
 
 
 

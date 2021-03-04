@@ -19,6 +19,7 @@ class AppStrings {
   static const wrong_email = 'Enter the correct Email';
   static const enter_password = 'Please enter your password';
   static const wrong_password = 'Enter the correct password';
+  static const wrong_password_email = 'Enter the correct Email and Password';
 }
 
 class ApiUrlConstants {

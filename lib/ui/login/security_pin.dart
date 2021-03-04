@@ -1,7 +1,6 @@
 import 'package:YOURDRS_FlutterAPP/common/app_colors.dart';
 import 'package:YOURDRS_FlutterAPP/common/app_strings.dart';
-import 'package:YOURDRS_FlutterAPP/data/model/userclass.datr.dart';
-import 'package:YOURDRS_FlutterAPP/data/service/user_service.dart';
+import 'package:YOURDRS_FlutterAPP/data/model/user_class.dart';
 import 'package:YOURDRS_FlutterAPP/ui/login/loginscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +19,7 @@ class Security_state extends State<SecurityPin> {
   // ignore: non_constant_identifier_names
   // SecurityPin _user_id = new SecurityPin();
 
-  Future<UserAuth> _futureUser;
+  // Future<UserAuth> _futureUser;
 
   bool _passwordvisible;
   final _formKey = GlobalKey<FormState>();
@@ -72,8 +71,8 @@ class Security_state extends State<SecurityPin> {
       body: Center(
         child: Container(
           // width: ,
-          child: FutureBuilder<UserAuth>(
-            future: fetchUserData(),
+          child: FutureBuilder<AuthenticateUser>(
+            //   future: fetchUserData(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 print(snapshot.data);
@@ -147,38 +146,38 @@ class Security_state extends State<SecurityPin> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               onPressed: () {
-                                setState(() {
-                                  var check_email = email_controller.text;
-                                  var check_password = password_controller.text;
-
-                                  if (check_email == snapshot.data.user &&
-                                      check_password ==
-                                          snapshot.data.password) {
-                                    print("true");
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginScreen()));
-                                  } else {
-                                    print("false");
-
-                                    return showDialog(
-                                      context: context,
-                                      builder: (ctx) => AlertDialog(
-                                        title: Row(
-                                          children: [
-                                            Text(
-                                              "Enter your email id and password",
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                });
+                                // setState(() {
+                                //   var check_email = email_controller.text;
+                                //   var check_password = password_controller.text;
+                                //
+                                //   if (check_email == snapshot.data.user &&
+                                //       check_password ==
+                                //           snapshot.data.password) {
+                                //     print("true");
+                                //     Navigator.of(context).push(
+                                //         MaterialPageRoute(
+                                //             builder: (context) =>
+                                //                 LoginScreen()));
+                                //   } else {
+                                //     print("false");
+                                //
+                                //     return showDialog(
+                                //       context: context,
+                                //       builder: (ctx) => AlertDialog(
+                                //         title: Row(
+                                //           children: [
+                                //             Text(
+                                //               "Enter your email id and password",
+                                //               style: TextStyle(
+                                //                 fontSize: 15,
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       ),
+                                //     );
+                                //   }
+                                // });
                               },
 
                               //     () {

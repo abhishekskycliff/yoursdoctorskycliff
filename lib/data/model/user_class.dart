@@ -1,38 +1,16 @@
-class UserAuth {
-  String user;
-  String password;
-
-  UserAuth({this.user, this.password});
-
-  UserAuth.fromJson(Map<String, dynamic> json) {
-    user = json['user'];
-    password = json['password'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user'] = this.user;
-    data['password'] = this.password;
-    return data;
-  }
-}
-
-
-/// model class for the AuthenticateUser
-
 class AuthenticateUser {
   int userId;
   String userName;
   String displayName;
   String token;
-  Null memberPin;
-  Null appPhoneNo;
+  String memberPin;
+  String appPhoneNo;
   List<MemberRole> memberRole;
-  Null profilePhoto;
-  Null clientIP;
-  Null phiSessionId;
+  String profilePhoto;
+  String clientIP;
+  int phiSessionId;
   int patientId;
-  Null dob;
+  String dob;
   bool isErxMember;
   Header header;
 

@@ -23,6 +23,7 @@ class AppConstants {
   static const supportedLocales = [Locale('en', 'US')];
 
   /// Network
+  ///  team 1
   static const dioBaseUrl = "https://ydrsdevapi.yourdrs.com/";
   static const apiTimeout = 30 * 1000; // 30 sec
   static const dioConnectTimeout = 30 * 1000; // 30 sec
@@ -145,30 +146,4 @@ class AppConstants {
     bool isLengthOk = (otpValue.length == AppConstants.pinLength);
     return (isOnlyNum && isLengthOk);
   }
-}
-
-
-mixin ValidationMixin {
-  bool isFieldEmpty(String fieldValue) => fieldValue?.isEmpty ?? true;
-
-  bool validateEmailAddress(String email) {
-    if (email == null) {
-      return false;
-    }
-
-    return RegExp(
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(email);
-  }
-
-  bool validatePassword(String email) {
-    if (email == null) {
-      return false;
-    }
-
-    return RegExp(
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
-        .hasMatch(email);
-  }
-
 }
