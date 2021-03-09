@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:YOURDRS_FlutterAPP/common/app_strings.dart';
-import 'package:YOURDRS_FlutterAPP/data/model/user_class.dart';
+import 'package:YOURDRS_FlutterAPP/data/model/login_model_class.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServices {

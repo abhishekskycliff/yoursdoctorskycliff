@@ -15,16 +15,17 @@ class CustomizedColors {
   static const homeSubtitleColor = Colors.grey;
 
   ///team 1
-  static const login_screen_background = Color.fromRGBO(231,232,234,1);
-  static const your_text_color = Color.fromRGBO(107,148,220,1);
-  static const doctor_text_color = Color.fromRGBO(145,160,188,1);
-  static const welcome_text_color = Color.fromRGBO(26,26,26,1);
-  static const your_doctors_text_color = Color.fromRGBO(124,124,124,1);
-  static const text_field_background = Color.fromRGBO(231,232,234,1);
-  static const email_text_color = Color.fromRGBO(116,116,116,1);
-  static const password_text_color = Color.fromRGBO(116,116,116,1);
-  static const sign_in_text_color = Color.fromRGBO(231,232,234,1);
-  static const sign_in_button = Color.fromRGBO(43,96,175,1);
-
-
+  static const login_screen_background = Color.fromRGBO(231, 232, 234, 1);
+  static const your_text_color = Color.fromRGBO(107, 148, 220, 1);
+  static const doctor_text_color = Color.fromRGBO(145, 160, 188, 1);
+  static const welcome_text_color = Color.fromRGBO(26, 26, 26, 1);
+  static const your_doctors_text_color = Color.fromRGBO(124, 124, 124, 1);
+  static const text_field_background = Color.fromRGBO(231, 232, 234, 1);
+  static const email_text_color = Color.fromRGBO(116, 116, 116, 1);
+  static const password_text_color = Color.fromRGBO(116, 116, 116, 1);
+  static const sign_in_text_color = Color.fromRGBO(231, 232, 234, 1);
+  static const sign_in_button = Color.fromRGBO(43, 96, 175, 1);
+  static const PinScreenColor = Color.fromRGBO(15, 17, 40, 1);
+  static const splashscreen_background_color = Color.fromRGBO(43, 96, 175, 1);
+  static const splashscreen_text = Color.fromRGBO(231, 232, 234, 1);
 }

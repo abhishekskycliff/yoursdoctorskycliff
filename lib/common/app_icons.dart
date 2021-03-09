@@ -17,12 +17,14 @@ class AppIcons {
 
   static const add = "assets/icons/add.svg";
 
-  /// Team 1
-  static const doctor_img = "assets/images/doctor_img.png";
-  static const alert_img = "assets/images/login_successful.gif";
 
 }
 
 class AppImages {
+  /// Team 1
+  static const doctor_img = "assets/images/doctor_img.png";
+  static const alert_img = "assets/images/login_successful.gif";
   static const placeholder = "assets/images/placeholder.png";
+  static const logo = "assets/images/logo.png";
+  static const soma_health_logo = "assets/images/soma_h_black_512.png";
 }

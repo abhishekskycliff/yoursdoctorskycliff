@@ -42,9 +42,6 @@ dependencies:
   # Shared Preference
   shared_preferences: ^0.5.12+4
 
-  # Flutter icon
-  flutter_launcher_icons: ^0.7.0
-
   # bloc
   bloc: ^6.1.1
   flutter_bloc: any
@@ -55,10 +52,19 @@ dependencies:
   # path
   path: any
   path_provider: ^1.6.27
+
+  # Input value in Pin put
+  pinput: ^1.0.0
+
+  #local_auth
+  local_auth: ^0.6.2+1
+
   # ============================================== Team 1 ================================================
 
 
 dev_dependencies:
+  # Flutter icon
+  flutter_launcher_icons: ^0.7.0
   flutter_test:
     sdk: flutter
 

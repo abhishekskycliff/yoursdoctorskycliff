@@ -25,6 +25,7 @@ class AppConstants {
   /// Network
   ///  team 1
   static const dioBaseUrl = "https://ydrsdevapi.yourdrs.com/";
+
   static const apiTimeout = 30 * 1000; // 30 sec
   static const dioConnectTimeout = 30 * 1000; // 30 sec
   static const dioReceiveTimeout = 30 * 1000; // 30 sec
